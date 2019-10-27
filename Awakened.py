@@ -32,7 +32,7 @@ frame_threshold = 20
 # Initializing dlib's face detector (HOG-based)
 #Detecting the frontal faces
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor('/Users/rraina/Desktop/SDHACKS_2019/shape_predictor_68_face_landmarks.dat')
+predictor = dlib.shape_predictor('/shape_predictor_68_face_landmarks.dat')
 
 print("Initializing Facial Landmarking Sensor ->")
 # Initializing the camera sensor to warm up
@@ -74,7 +74,7 @@ while True:
 	cv2.imshow("Frame", frame)
 	key = cv2.waitKey(1) & 0xFF
 	if key == ord("q"):
-		f = open('/Users/rraina/Desktop/SDHACKS_2019/timing.csv','a')
+		f = open('/timing.csv','a')
 		f.write('\n' + str(datetime.datetime.now()) + ", " + str(time)) #Give your csv text here.
 		## Python will convert \n to os.linesep
 		f.close()
