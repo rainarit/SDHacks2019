@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 # Import the necessary packages
 from imutils.video import VideoStream
 from imutils import face_utils
@@ -17,16 +11,8 @@ from scipy.spatial import distance as dist
 import csv
 import datetime
 
-
-# In[2]:
-
-
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
-
-
-# In[3]:
-
 
 def eye_aspect_ratio(eye):
 	# compute the euclidean distances between the two sets of
@@ -41,10 +27,6 @@ def eye_aspect_ratio(eye):
 	# return the eye aspect ratio
 	return ear
 
-
-# In[4]:
-
-
 threshold = 0.24
 frame_threshold = 20
 # Initializing dlib's face detector (HOG-based)
@@ -52,25 +34,13 @@ frame_threshold = 20
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor('/Users/rraina/Desktop/SDHACKS_2019/shape_predictor_68_face_landmarks.dat')
 
-
-# In[5]:
-
-
 print("Initializing Facial Landmarking Sensor ->")
 # Initializing the camera sensor to warm up
 print("Camera Sensor Warming Up ->")
 vs = cv2.VideoCapture(0)
 time.sleep(2.0)
 
-
-# In[6]:
-
-
 blink_count = 0
-
-
-# In[7]:
-
 
 # Looping over all the frames from the webcam stream
 total = 0
@@ -92,14 +62,12 @@ while True:
 		rightEyeHull = cv2.convexHull(rightEye)
 		cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
 		cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
-		if ear < threshold:
-			print(total)   
+		if ear < threshold:  
 			blink_count += 1
 			if blink_count >= frame_threshold:
 				cv2.putText(frame, "****************ALERT!****************", (10, 30),
 					cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
 				fps = vs.get(cv2.CAP_PROP_FPS)
-				print(fps)
 				time = blink_count/fps
 				cv2.putText(frame, "Total Time:" + str(time) + " seconds", (10, 70),
 					cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
@@ -113,28 +81,3 @@ while True:
 		cv2.destroyAllWindows()
 		vs.release()
 		break
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
